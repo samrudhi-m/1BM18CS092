@@ -45,7 +45,7 @@ printf(" Auditorium is empty\n");
 }
 else
 {int i;
-printf("DISPLAY OF STUDENT INFORMATION BASED ON LAST IN FIRST OUT ORDER/n");
+printf("DISPLAY OF STUDENT INFORMATION BASED ON LAST IN FIRST OUT ORDER\n");
 for(i=top; i>=0; i--);
 {
 printf("STUDENT NAME: %s \n", info[i].name);
