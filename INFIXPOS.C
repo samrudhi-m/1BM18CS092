@@ -15,7 +15,7 @@ char pop()
         return stack[top--];
 }
  
-int priority(char x)
+int highestpriority(char x)
 {
     if(x == '(')
         return 0;
@@ -45,7 +45,7 @@ main()
         }
         else
         {
-            while(priority(stack[top]) >= priority(*e))
+            while(highestpriority(stack[top]) >= priority(*e))
                 printf("%c",pop());
             push(*e);
         }
