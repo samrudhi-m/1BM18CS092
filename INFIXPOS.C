@@ -1,58 +1,95 @@
+#include <stdio.h>
+#include <string.h>
+#include<ctype.h>
+#define SIZE 100
+int top=-1;
+char s[SIZE];
 
-#include<stdio.h>
-char stack[20];
-int top = -1;
-void push(char x)
+void push(char val)
 {
-    stack[++top] = x;
+    if(top==SIZE-1)
+        printf("stack full");
+    else{
+        top=top+1;
+        s[top]=val;
+    }
 }
- 
+
 char pop()
 {
-    if(top == -1)
-        return -1;
-    else
-        return stack[top--];
+    char val=' ';
+    if(top==-1)
+        printf("stack empty");
+    else{
+        val=s[top];
+        top=top-1;
+    }
+    return val;
 }
- 
-int highestpriority(char x)
+
+int priority(char op)
 {
-    if(x == '(')
-        return 0;
-    if(x == '+' || x == '-')
+    if(op=='%' || op=='/' || op=='*' )
         return 1;
-    if(x == '*' || x == '/')
-        return 2;
+    else
+        return 0;
 }
- 
-main()
+
+void infixToPostfix(char in[],char post[])
 {
-    char exp[20];
-    char *e, x;
-    printf("Enter the expression :: ");
-    scanf("%s",exp);
-    e = exp;
-    while(*e != '\0')
+    int i=0,j=0;
+    while(in[i]!='\0')
     {
-        if(isalnum(*e))
-            printf("%c",*e);
-        else if(*e == '(')
-            push(*e);
-        else if(*e == ')')
+        if(in[i]=='(')
         {
-            while((x = pop()) != '(')
-                printf("%c", x);
+             push(in[i]);
+             i++;
+        }
+        else if(in[i]==')')
+        {
+            while(top!=-1 && s[top]!='(')
+            {
+                post[j]=pop();
+                j++;
+            }
+            pop();
+            i++;
+        }
+        else if(isdigit(in[i]) || isalpha(in[i]))
+        {
+            post[j]=in[i];
+            i++;
+            j++;
+        }
+        else if(in[i]=='%' || in[i]=='/' || in[i]=='-' || in[i]=='*' || in[i]=='+' )
+        {
+            while(top!=-1 && s[top]!='(' && (priority(s[top])>=priority(in[i])))
+            {
+                post[j]=pop();
+                j++;
+            }
+            push(in[i]);
+            i++;
         }
         else
-        {
-            while(highestpriority(stack[top]) >= priority(*e))
-                printf("%c",pop());
-            push(*e);
-        }
-        e++;
+            printf("invalid expression\n");
     }
-    while(top != -1)
+    while(top!=-1 && s[top]!='(')
     {
-        printf("%c",pop());
+        post[j]=pop();
+        j++;
     }
+    post[j]='\0';
+}
+
+int main()
+{
+    char infix[100],postfix[100];
+    printf("enter infix expression: ");
+    scanf("%s",infix);
+    strcpy(postfix,"");
+    infixToPostfix(infix,postfix);
+    printf("postfix: ");
+    printf("%s",postfix);
+    return 0;
 }
