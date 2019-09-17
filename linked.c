@@ -58,6 +58,51 @@ NODE insert_end(NODE head, int item)
 	p-> next=q;
 	return head;
 }
+NODE insert_pos(NODE head,int item,int pos)
+{
+	NODE curr,prev=NULL,newn;
+	int count=1;
+	newn=getnode();
+	newn->data=item;
+	newn->next=NULL;
+	if(head==NULL)
+	{
+		if(pos==1)
+			return newn;
+		else
+		{
+			printf("Invalid position\n");
+			return 0;
+		}
+	}
+	if(pos==1)
+	{
+		newn->next=head;
+		head=newn;
+		return head;
+	}
+	else
+	{
+		curr=head;
+		while(curr!=NULL&&count!=pos)
+		{
+			prev=curr;
+			curr=curr->next;
+			count++;
+		}
+		if(count==pos)
+		{
+			prev->next=newn;
+			newn->next=curr;
+			return head;
+		}
+		else
+		{
+			printf("Invalid position\n");
+			return head;
+		}
+	}
+}
 int main()
 {
 	NODE head=NULL;
