@@ -106,31 +106,33 @@ NODE insert_pos(NODE head,int item,int pos)
 int main()
 {
 	NODE head=NULL;
-	int option,ele, value;
-	do
+	int option,ele,pos,value;
+	while(1)
 	{
-		printf(" \n1.Insert front\n 2.Insert end\n 3.Display\n 4.Exit\n\n");
+		printf("1.Insert front\n2.Insert end\n3.Inset pos\n4.Display\n5.Exit\n");
 		printf("Enter option\n");
-		scanf("%d", &option);
+		scanf("%d",&option);
 		switch(option)
 		{
-			case 1: printf("Enter the element to be inserted\n");
-				scanf("%d", &ele);
-				head= insert_front(head, ele);
+			case 1: printf("Enter element to be inserted\n");
+				scanf("%d",&ele);
+				head=insert_front(head,ele);
 				break;
-			case 2: printf("Enter the element to be inserted\n");
-				scanf("%d", &ele);
-				head= insert_end(head, ele);
-				break; 
-			case 3: printf("Elements in the list are\n");
+			case 2: printf("Enter element to be inserted\n");
+				scanf("%d",&ele);
+				head=insert_end(head,ele);
+				break;
+			case 3:printf("Enetr pos and value\n");
+				scanf("%d%d",&pos,&value);
+				head=insert_pos(head,value,pos);
+				break;
+			case 4:printf("Elements in list are\n");
 				display(head);
 				break;
-			case 4: exit(0);
-			default: printf("INVALID CHOICE");
+			case 5:
+				exit(0);
+				
 		}
-	}while(1);
+	}
 	return 0;
 }
-
-
-		
