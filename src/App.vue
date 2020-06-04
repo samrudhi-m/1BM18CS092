@@ -1,102 +1,62 @@
 <template>
   <div id="app" class="container-fluid">
-    <slide-y-down-transition appear :duration="1000" :delay="250">
-      <div id="header">
-        <div id="greeter">
-          <p>
-            Hey
-            <br />
-            <strong>{{this.$store.state.username}}!</strong>
-          </p>
-        </div>
-
-        <div id="account-buttons">
-          <md-button
-            v-show="!this.$store.state.userId"
-            class="md-primary md-dense"
-            v-on:click="Login"
-          >
-            Login
-            <Login />
-          </md-button>
-
-          <md-button
-            v-show="!this.$store.state.userId"
-            class="md-accent md-dense"
-            v-on:click="Register"
-          >
-            Register
-            <Register />
-          </md-button>
-
-          <md-button v-show="this.$store.state.userId" class="md-primary" v-on:click="Edit">
-            Update User
-            <UpdateUser />
-          </md-button>
-
-          <md-button
-            v-show="this.$store.state.userId"
-            class="md-dense md-accent"
-            v-on:click="Logout"
-          >Logout</md-button>
-        </div>
+    <div id="header">
+      <div id="greeter">
+        <p>Hey {{this.$store.state.username}}!</p>
       </div>
-    </slide-y-down-transition>
-
-    <slide-y-down-transition appear :duration="1000" :delay="500">
-      <div id="logo">
-        <h3 id="logo">books kodi</h3>
+      <div id="account-buttons">
+        <md-button v-show="!this.$store.state.userId" class="md-dense md-raised">
+          <router-link to="/login">Login</router-link>
+        </md-button>
+        <md-button v-show="!this.$store.state.userId" class="md-dense md-primary">
+          <router-link to="/register">Register</router-link>
+        </md-button>
+        <md-button
+          v-show="this.$store.state.userId"
+          class="md-dense md-accent"
+          v-on:click="Logout"
+        >Logout</md-button>
       </div>
-    </slide-y-down-transition>
+    </div>
 
-    <slide-y-down-transition appear :duration="1000" :delay="750">
-      <div id="content">
-        <md-tabs class="md-transparent" md-alignment="fixed" md-sync-route>
-          <md-tab id="tab-products" md-label="All Items" md-icon="group" to="/" exact></md-tab>
-          <md-tab
-            v-if="this.$store.state.userId"
-            id="tab-user"
-            md-label="Your Items"
-            md-icon="person"
-            to="/userproducts"
-          ></md-tab>
-          <md-tab id="lost-found" md-label="Lost N Found" md-icon="live_help" to="/lostfound"></md-tab>
-        </md-tabs>
-        <!-- 
+    <div id="logo">
+      <h3 id="logo">books kodi</h3>
+    </div>
+
+    <div id="content">
+      <md-tabs
+        class="md-transparent"
+        v-show="this.$store.state.userId"
+        md-alignment="fixed"
+        md-sync-route
+      >
+        <md-tab id="tab-products" md-label="All Items" md-icon="group" to="/" exact></md-tab>
+        <md-tab id="tab-user" md-label="Your Items" md-icon="person" to="/userproducts"></md-tab>
+        <md-tab id="lost-found" md-label="Lost N Found" md-icon="live_help" to="/lostfound"></md-tab>
+      </md-tabs>
+      <!-- 
       Content render here
-        -->
-        <router-view />
-      </div>
-    </slide-y-down-transition>
+      -->
+      <router-view />
+    </div>
 
-    <slide-y-down-transition appear :duration="1000" :delay="1000">
-      <div id="footer">You have reached the bottom!</div>
-    </slide-y-down-transition>
+    <div id="footer">You have reached the bottom!</div>
 
     <!-- 
     FAB
     -->
-    <slide-y-down-transition appear :duration="1000" :delay="1500">
-      <md-button
-        v-show="this.$store.state.userId"
-        class="md-fab md-fab-bottom-right md-primary md-fixed"
-        v-on:click="AddProduct"
-      >
-        <md-icon>
-          add
-          <AddProduct />
-        </md-icon>
-      </md-button>
-    </slide-y-down-transition>
+    <md-button
+      v-show="this.$store.state.userId"
+      class="md-fab md-fab-bottom-right md-primary md-fixed"
+    >
+      <router-link to="/add">
+        <md-icon>add</md-icon>
+      </router-link>
+    </md-button>
   </div>
 </template>
 
 <script>
-import Login from "./components/Login";
-import Register from "./components/Register";
-import UpdateUser from "./components/UpdateUser";
-import AddProduct from "./components/AddProduct";
-
 export default {
   name: "products-list",
   data() {
@@ -104,43 +64,15 @@ export default {
       products: {}
     };
   },
-  components: {
-    Login,
-    Register,
-    UpdateUser,
-    AddProduct
-  },
   methods: {
-    Login() {
-      this.$store.state.login = true;
-    },
-    Register() {
-      this.$store.state.register = true;
-    },
-    Edit() {
-      this.$store.state.updateuser = true;
-    },
-    AddProduct() {
-      this.$store.state.addproduct = true;
-    },
     Logout() {
       this.$store.commit("Logout");
-      location.reload();
     }
   }
 };
 </script> 
 
 <style scoped>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s;
-}
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
-}
-
 #app {
   margin: 0 auto;
   display: grid;
@@ -165,8 +97,6 @@ export default {
 
 #account-buttons {
   justify-self: end;
-  display: flex;
-  flex-direction: row;
 }
 
 #content {
@@ -175,7 +105,6 @@ export default {
 }
 
 #greeter p {
-  margin-top: 10px;
   font-size: 18px;
 }
 

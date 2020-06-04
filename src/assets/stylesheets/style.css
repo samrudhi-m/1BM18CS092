@@ -31,8 +31,6 @@
   margin: 25px !important;
 }
 
-/* card related, mostly curved borders */
-
 .rounded-card.md-card {
   width: 300px;
   margin: 10px 5px 10px 5px;
@@ -41,9 +39,12 @@
   box-shadow: 0 7px 30px -10px rgba(150, 170, 180, 0.6) !important;
 }
 
+
 .rounded-card.md-card:hover {
-  box-shadow: 0 7px 45px -10px rgba(150, 170, 180, 0.75) !important;
-} 
+  transform: scale(1.02) !important;
+  transition-duration: 1s !important;
+  box-shadow: 0 7px 45px -10px rgba(150, 170, 180, 0.7) !important;
+}
 
 img,
 .rounded-card,
@@ -59,6 +60,10 @@ img,
   float: right;
 }
 
-#centered-masonry {
-  margin: 0 auto;
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+  opacity: 0;
 }
